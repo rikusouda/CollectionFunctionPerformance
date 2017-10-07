@@ -17,7 +17,7 @@ class PerformenceTester {
         self.vc = viewController
     }
     
-    private static func mapFunction(data: Int) -> Int {
+    private static func mapFunction(_ data: Int) -> Int {
         //return Int(String(data))!
         return data
     }
@@ -181,6 +181,10 @@ extension PerformenceTester {
             arrayLazyFilterMapReduce()
         case 3:
             arrayLazyMapFilterReduce()
+        case 4:
+            arrayForEach()
+        case 5:
+            arrayFor()
         default:
             break
         }
@@ -243,6 +247,35 @@ extension PerformenceTester {
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: result)
     }
+    
+    private func arrayForEach() {
+        let startTime = Date()
+
+        var result = 0
+        sourceArray
+            .forEach {
+                if $0 % 2 == 0 {
+                    result += PerformenceTester.mapFunction($0)
+                }
+            }
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: result)
+    }
+    
+    private func arrayFor() {
+        let startTime = Date()
+        
+        var result = 0
+        for value in sourceArray {
+                if value % 2 == 0 {
+                    result += PerformenceTester.mapFunction(value)
+                }
+        }
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: result)
+    }
 }
 
 extension PerformenceTester {
@@ -256,6 +289,10 @@ extension PerformenceTester {
             arrayLazyFilterMap3Reduce()
         case 3:
             arrayLazyMap3FilterReduce()
+        case 4:
+            arrayForEach3()
+        case 5:
+            arrayFor3()
         default:
             break
         }
@@ -322,6 +359,45 @@ extension PerformenceTester {
             .reduce(0, { (result, val) -> Int in
                 return result + val
             })
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: result)
+    }
+    
+    private func arrayForEach3() {
+        let startTime = Date()
+        
+        var result = 0
+        sourceArray
+            .forEach {
+                if $0 % 2 == 0 {
+                    result +=
+                        PerformenceTester.mapFunction(
+                            PerformenceTester.mapFunction(
+                                PerformenceTester.mapFunction($0)
+                        )
+                    )
+                }
+        }
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: result)
+    }
+    
+    private func arrayFor3() {
+        let startTime = Date()
+        
+        var result = 0
+        for value in sourceArray {
+            if value % 2 == 0 {
+                result +=
+                    PerformenceTester.mapFunction(
+                        PerformenceTester.mapFunction(
+                            PerformenceTester.mapFunction(value)
+                        )
+                )
+            }
+        }
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: result)
