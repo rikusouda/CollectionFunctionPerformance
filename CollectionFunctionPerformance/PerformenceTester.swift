@@ -42,6 +42,8 @@ extension PerformenceTester {
             arrayLazyFilterMap()
         case 3:
             arrayLazyMapFilter()
+        case 4:
+            arrayForToArray()
         default:
             break
         }
@@ -94,6 +96,20 @@ extension PerformenceTester {
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
+    
+    private func arrayForToArray() {
+        let startTime = Date()
+        
+        var newArray = [Int]()
+        for value in sourceArray {
+            if value % 2 == 0 {
+                newArray.append(PerformenceTester.mapFunction(value))
+            }
+        }
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: newArray.count)
+    }
 }
 
 extension PerformenceTester {
@@ -107,6 +123,8 @@ extension PerformenceTester {
             arrayLazyFilterMap3()
         case 3:
             arrayLazyMap3Filter()
+        case 4:
+            arrayFor3ToArray()
         default:
             break
         }
@@ -163,6 +181,26 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .filter { ($0 % 2) == 0 }
         )
+        
+        let elapsed = Date().timeIntervalSince(startTime) as Double
+        self.showResult(second: elapsed, dataCount: newArray.count)
+    }
+    
+    private func arrayFor3ToArray() {
+        let startTime = Date()
+        
+        var newArray = [Int]()
+        for value in sourceArray {
+            if value % 2 == 0 {
+                newArray.append(
+                    PerformenceTester.mapFunction(
+                        PerformenceTester.mapFunction(
+                            PerformenceTester.mapFunction(value)
+                        )
+                    )
+                )
+            }
+        }
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: newArray.count)
@@ -395,7 +433,7 @@ extension PerformenceTester {
                         PerformenceTester.mapFunction(
                             PerformenceTester.mapFunction(value)
                         )
-                )
+                    )
             }
         }
         
