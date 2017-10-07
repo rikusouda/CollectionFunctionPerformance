@@ -9,21 +9,31 @@
 import Foundation
 import UIKit
 
+struct UserData {
+    init(userId: Int) {
+        self.userId = userId
+    }
+    var userId: Int
+    var userName: String = "rikusouda"
+    var userProfileIconURL = "https://pbs.twimg.com/profile_images/842040493827534848/YBx-Bbdy_400x400.jpg"
+    var userProfile = "I am iOS application developer"
+}
+
 class PerformenceTester {
-    let sourceArray = [Int](0..<10000000)
+    let sourceArray = [Int](0..<5000).map { UserData(userId: $0) }
     weak var vc: UIViewController!
     
     init(viewController: UIViewController) {
         self.vc = viewController
     }
     
-    private static func mapFunction(_ data: Int) -> Int {
+    private static func mapFunction(_ data: UserData) -> UserData {
         //return Int(String(data))!
         return data
     }
     
     func showResult(second: Double, dataCount: Int) {
-        let message = String(format: "%.3f second\nDataCount: \(dataCount)", second)
+        let message = String(format: "%.6f msec\nDataCount: \(dataCount)", second * 1000)
         
         let alert = UIAlertController(title: "Time", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -53,7 +63,7 @@ extension PerformenceTester {
         let startTime = Date()
         
         let newArray = sourceArray
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -65,7 +75,7 @@ extension PerformenceTester {
         
         let newArray = sourceArray
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: newArray.count)
@@ -76,7 +86,7 @@ extension PerformenceTester {
         
         let newArray = Array(sourceArray
             .lazy
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
         )
         
@@ -90,7 +100,7 @@ extension PerformenceTester {
         let newArray = Array(sourceArray
             .lazy
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
         )
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -100,9 +110,9 @@ extension PerformenceTester {
     private func arrayForToArray() {
         let startTime = Date()
         
-        var newArray = [Int]()
+        var newArray = [UserData]()
         for value in sourceArray {
-            if value % 2 == 0 {
+            if value.userId % 2 == 0 {
                 newArray.append(PerformenceTester.mapFunction(value))
             }
         }
@@ -134,7 +144,7 @@ extension PerformenceTester {
         let startTime = Date()
         
         let newArray = sourceArray
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
@@ -150,7 +160,7 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
         self.showResult(second: elapsed, dataCount: newArray.count)
@@ -161,7 +171,7 @@ extension PerformenceTester {
         
         let newArray = Array(sourceArray
             .lazy
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
@@ -174,12 +184,12 @@ extension PerformenceTester {
     private func arrayLazyMap3Filter() {
         let startTime = Date()
         
-        let newArray = Array(sourceArray
+        let newArray: [UserData] = [UserData](sourceArray
             .lazy
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
         )
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -189,9 +199,9 @@ extension PerformenceTester {
     private func arrayFor3ToArray() {
         let startTime = Date()
         
-        var newArray = [Int]()
+        var newArray = [UserData]()
         for value in sourceArray {
-            if value % 2 == 0 {
+            if value.userId % 2 == 0 {
                 newArray.append(
                     PerformenceTester.mapFunction(
                         PerformenceTester.mapFunction(
@@ -232,10 +242,10 @@ extension PerformenceTester {
         let startTime = Date()
         
         let result = sourceArray
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -247,9 +257,9 @@ extension PerformenceTester {
         
         let result = sourceArray
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -261,10 +271,10 @@ extension PerformenceTester {
         
         let result = sourceArray
             .lazy
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -277,9 +287,9 @@ extension PerformenceTester {
         let result = sourceArray
             .lazy
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -292,8 +302,8 @@ extension PerformenceTester {
         var result = 0
         sourceArray
             .forEach {
-                if $0 % 2 == 0 {
-                    result += PerformenceTester.mapFunction($0)
+                if $0.userId % 2 == 0 {
+                    result += PerformenceTester.mapFunction($0).userId
                 }
             }
         
@@ -306,8 +316,8 @@ extension PerformenceTester {
         
         var result = 0
         for value in sourceArray {
-                if value % 2 == 0 {
-                    result += PerformenceTester.mapFunction(value)
+                if value.userId % 2 == 0 {
+                    result += PerformenceTester.mapFunction(value).userId
                 }
         }
         
@@ -340,12 +350,12 @@ extension PerformenceTester {
         let startTime = Date()
         
         let result = sourceArray
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -359,9 +369,9 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -373,12 +383,12 @@ extension PerformenceTester {
         
         let result = sourceArray
             .lazy
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -393,9 +403,9 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
-            .filter { ($0 % 2) == 0 }
+            .filter { ($0.userId % 2) == 0 }
             .reduce(0, { (result, val) -> Int in
-                return result + val
+                return result + val.userId
             })
         
         let elapsed = Date().timeIntervalSince(startTime) as Double
@@ -408,13 +418,13 @@ extension PerformenceTester {
         var result = 0
         sourceArray
             .forEach {
-                if $0 % 2 == 0 {
+                if $0.userId % 2 == 0 {
                     result +=
                         PerformenceTester.mapFunction(
                             PerformenceTester.mapFunction(
                                 PerformenceTester.mapFunction($0)
                         )
-                    )
+                    ).userId
                 }
         }
         
@@ -427,13 +437,13 @@ extension PerformenceTester {
         
         var result = 0
         for value in sourceArray {
-            if value % 2 == 0 {
+            if value.userId % 2 == 0 {
                 result +=
                     PerformenceTester.mapFunction(
                         PerformenceTester.mapFunction(
                             PerformenceTester.mapFunction(value)
                         )
-                    )
+                    ).userId
             }
         }
         
