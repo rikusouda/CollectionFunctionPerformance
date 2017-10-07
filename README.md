@@ -1,6 +1,6 @@
 # CollectionFunctionPerformance
 
-This is app to meature performance of chained `map`, `filter`, `reduce` and so on.
+This is iOS app to meature performance of chained `map`, `filter`, `reduce` and so on.
 
 # How to use
 
