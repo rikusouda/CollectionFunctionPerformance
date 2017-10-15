@@ -51,8 +51,10 @@ extension PerformenceTester {
         case 2:
             arrayLazyFilterMap()
         case 3:
-            arrayLazyMapFilter()
+            arrayLazyFilterMapReduceToArray()
         case 4:
+            arrayLazyMapFilter()
+        case 5:
             arrayForToArray()
         default:
             break
@@ -89,6 +91,21 @@ extension PerformenceTester {
             .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
         )
+        
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
+        self.showResult(second: elapsed, dataCount: newArray.count)
+    }
+    
+    private func arrayLazyFilterMapReduceToArray() {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
+        let newArray = sourceArray
+            .lazy
+            .filter { ($0.userId % 2) == 0 }
+            .map(PerformenceTester.mapFunction)
+            .reduce(into: [UserData]()) { (result: inout [UserData], data: UserData) in
+                result.append(data)
+            }
         
         let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
@@ -132,8 +149,10 @@ extension PerformenceTester {
         case 2:
             arrayLazyFilterMap3()
         case 3:
-            arrayLazyMap3Filter()
+            arrayLazyFilterMap3ReduceToArray()
         case 4:
+            arrayLazyMap3Filter()
+        case 5:
             arrayFor3ToArray()
         default:
             break
@@ -176,6 +195,23 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
         )
+        
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
+        self.showResult(second: elapsed, dataCount: newArray.count)
+    }
+    
+    private func arrayLazyFilterMap3ReduceToArray() {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
+        let newArray = sourceArray
+            .lazy
+            .filter { ($0.userId % 2) == 0 }
+            .map(PerformenceTester.mapFunction)
+            .map(PerformenceTester.mapFunction)
+            .map(PerformenceTester.mapFunction)
+            .reduce(into: [UserData]()) { (result: inout [UserData], data: UserData) in
+                result.append(data)
+            }
         
         let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
