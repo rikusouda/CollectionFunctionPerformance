@@ -60,29 +60,29 @@ extension PerformenceTester {
     }
     
     private func arrayFilterMap() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = sourceArray
             .filter { ($0.userId % 2) == 0 }
             .map(PerformenceTester.mapFunction)
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayMapFilter() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = sourceArray
             .map(PerformenceTester.mapFunction)
             .filter { ($0.userId % 2) == 0 }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayLazyFilterMap() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = Array(sourceArray
             .lazy
@@ -90,12 +90,12 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
         )
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayLazyMapFilter() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = Array(sourceArray
             .lazy
@@ -103,12 +103,12 @@ extension PerformenceTester {
             .filter { ($0.userId % 2) == 0 }
         )
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayForToArray() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         var newArray = [UserData]()
         for value in sourceArray {
@@ -117,7 +117,7 @@ extension PerformenceTester {
             }
         }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
 }
@@ -141,7 +141,7 @@ extension PerformenceTester {
     }
     
     private func arrayFilterMap3() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = sourceArray
             .filter { ($0.userId % 2) == 0 }
@@ -149,12 +149,12 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .map(PerformenceTester.mapFunction)
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayMap3Filter() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = sourceArray
             .map(PerformenceTester.mapFunction)
@@ -162,12 +162,12 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
             .filter { ($0.userId % 2) == 0 }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayLazyFilterMap3() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray = Array(sourceArray
             .lazy
@@ -177,12 +177,12 @@ extension PerformenceTester {
             .map(PerformenceTester.mapFunction)
         )
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayLazyMap3Filter() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let newArray: [UserData] = [UserData](sourceArray
             .lazy
@@ -192,12 +192,12 @@ extension PerformenceTester {
             .filter { ($0.userId % 2) == 0 }
         )
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
     
     private func arrayFor3ToArray() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         var newArray = [UserData]()
         for value in sourceArray {
@@ -212,7 +212,7 @@ extension PerformenceTester {
             }
         }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: newArray.count)
     }
 }
@@ -239,7 +239,7 @@ extension PerformenceTester {
     }
     
     private func arrayFilterMapReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .filter { ($0.userId % 2) == 0 }
@@ -248,12 +248,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayMapFilterReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .map(PerformenceTester.mapFunction)
@@ -262,12 +262,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayLazyFilterMapReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .lazy
@@ -277,12 +277,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayLazyMapFilterReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .lazy
@@ -292,12 +292,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayForEach() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
 
         var result = 0
         sourceArray
@@ -307,12 +307,12 @@ extension PerformenceTester {
                 }
             }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayFor() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         var result = 0
         for value in sourceArray {
@@ -321,7 +321,7 @@ extension PerformenceTester {
                 }
         }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
 }
@@ -347,7 +347,7 @@ extension PerformenceTester {
     }
     
     private func arrayFilterMap3Reduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .filter { ($0.userId % 2) == 0 }
@@ -358,12 +358,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayMap3FilterReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .map(PerformenceTester.mapFunction)
@@ -374,12 +374,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayLazyFilterMap3Reduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .lazy
@@ -391,12 +391,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayLazyMap3FilterReduce() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         let result = sourceArray
             .lazy
@@ -408,12 +408,12 @@ extension PerformenceTester {
                 return result + val.userId
             })
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayForEach3() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         var result = 0
         sourceArray
@@ -428,12 +428,12 @@ extension PerformenceTester {
                 }
         }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
     
     private func arrayFor3() {
-        let startTime = Date()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
         var result = 0
         for value in sourceArray {
@@ -447,7 +447,7 @@ extension PerformenceTester {
             }
         }
         
-        let elapsed = Date().timeIntervalSince(startTime) as Double
+        let elapsed = CFAbsoluteTimeGetCurrent() - startTime
         self.showResult(second: elapsed, dataCount: result)
     }
 }
