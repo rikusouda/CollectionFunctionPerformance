@@ -20,8 +20,9 @@ struct UserData {
 }
 
 class PerformenceTester {
-    let sourceArray = [Int](0..<5000).map { UserData(userId: $0) }
-    weak var vc: UIViewController!
+    private static let itemsCount = 5000
+    private lazy var sourceArray = [Int](0..<Self.itemsCount).map { UserData(userId: $0) }
+    private weak var vc: UIViewController!
     
     init(viewController: UIViewController) {
         self.vc = viewController

@@ -4,4 +4,4 @@ This is iOS app to meature performance of chained `map`, `filter`, `reduce` and 
 
 # How to use
 
-Open xcodeproj by Xcode9
+Open xcodeproj by Xcode
